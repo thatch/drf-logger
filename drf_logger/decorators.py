@@ -1,4 +1,5 @@
 import logging
+from typing import Callable
 
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -14,13 +15,31 @@ ch.setFormatter(formatter)
 deco_logger.addHandler(ch)
 
 
-def api_logger(logger=None):
+class APILoggingDecorator(object):
 
-    if not isinstance(logger, logging.Logger):
-        logger = deco_logger
+    def __init__(self, logger=None, level: str = 'INFO'):
+        if not isinstance(logger, logging.Logger):
+            logger = deco_logger
+        self.log_func = self._get_logging_function(logger, level)
 
-    def wrapper(func):
-        def _wrapper(request: Request, **kwargs) -> Response:
+    @staticmethod
+    def _get_logging_function(logger: logging.Logger, level: str) -> Callable:
+        level = level.upper()
+        if level == 'DEBUG':
+            return logger.debug
+        elif level == 'INFO':
+            return logger.info
+        elif level == 'WARNING':
+            return logger.warning
+        elif level == 'ERROR':
+            return logger.error
+        elif level == 'CRITICAL':
+            return logger.critical
+        else:
+            raise ValueError(f'Invalid logging level: {level}.')
+
+    def __call__(self, func: Callable) -> Callable:
+        def wrapper(request: Request, **kwargs) -> Response:
             extra = {}
             extra['user_id'] = request.user.id
 
@@ -29,8 +48,7 @@ def api_logger(logger=None):
             extra['status_code'] = response.status_code
             extra['function'] = func.__name__
 
-            logger.info(message, extra=extra)
+            self.log_func(message, extra=extra)
             return response
 
-        return _wrapper
-    return wrapper
+        return wrapper

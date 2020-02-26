@@ -3,14 +3,14 @@ import os
 import unittest
 
 import django
-from drf_logger.decorators import api_logger
 from rest_framework.request import Request
 from rest_framework.response import Response
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 django.setup()
-
 from rest_framework.test import APIRequestFactory
+
+import drf_logger.utils
+from drf_logger.decorators import api_logger
 
 factory = APIRequestFactory()
 
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 ch = logging.StreamHandler()
 ch.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = drf_logger.utils.SimpleExtraFormatter()
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 

@@ -27,3 +27,6 @@ jobs:
     - name: Test with unittest
       run: |
         python -m unittest discover tests
+    - name: Mypy type checking
+      run: |
+        mypy drf_logger

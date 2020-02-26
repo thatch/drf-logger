@@ -1,5 +1,8 @@
 import logging
 
+from rest_framework.request import Request
+from rest_framework.response import Response
+
 from drf_logger import utils
 
 deco_logger = logging.getLogger(__name__)
@@ -17,7 +20,7 @@ def api_logger(logger=None):
         logger = deco_logger
 
     def wrapper(func):
-        def _wrapper(request, **kwargs):
+        def _wrapper(request: Request, **kwargs) -> Response:
             extra = {}
             extra['user_id'] = request.user.id
 

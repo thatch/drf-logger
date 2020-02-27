@@ -1,8 +1,2 @@
-autopep8
-coverage
-flake8
-mypy
-pylint
-
 django==3.0.3
 djangorestframework==3.11.0

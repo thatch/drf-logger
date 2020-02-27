@@ -43,3 +43,19 @@ def sample_api(request):
 ```text
 A message from sample_api., user_id=None, status_code=200, function=sample_api
 ```
+
+
+## A procedure to register to PyPI.
+
+```shell
+# Install dependencies.
+pip install twine
+pip install check-manifest
+# Check files before upload.
+check-manifest
+pip install wheel
+# Build
+python setup.py sdist bdist_wheel
+# Upload to PyPI.
+twine upload dist/*
+```

@@ -10,10 +10,21 @@ BUILDIN_KEYS = (
 
 class SimpleExtraFormatter(logging.Formatter):
 
-    def format(self, record):
+    def format(self, record) -> str:
         extra_txt = ''
         for k, v in record.__dict__.items():
             if k not in BUILDIN_KEYS:
                 extra_txt += ', {}={}'.format(k, v)
         message = super().format(record)
         return message + extra_txt
+
+
+def get_default_logger(name: str) -> logging.Logger:
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    formatter = SimpleExtraFormatter()
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+    return logger

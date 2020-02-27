@@ -15,13 +15,7 @@ from drf_logger.decorators import APILoggingDecorator, _get_logging_function
 
 factory = APIRequestFactory()
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-formatter = drf_logger.utils.SimpleExtraFormatter()
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logger = drf_logger.utils.get_default_logger(__name__)
 
 
 class GetLoggingFunctionTests(unittest.TestCase):

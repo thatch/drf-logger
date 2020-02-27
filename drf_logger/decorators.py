@@ -6,13 +6,7 @@ from rest_framework.response import Response
 
 from drf_logger import utils
 
-deco_logger = logging.getLogger(__name__)
-deco_logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-formatter = utils.SimpleExtraFormatter()
-ch.setFormatter(formatter)
-deco_logger.addHandler(ch)
+deco_logger = utils.get_default_logger(__name__)
 
 
 def _get_logging_function(logger: logging.Logger, level: str) -> Callable:

@@ -2,6 +2,13 @@
 
 ![GitHub Actions](https://github.com/yutayamazaki/drf-logger/workflows/Python%20package/badge.svg)
 
+## Installation
+
+```shell
+pip install drf-logger
+```
+
+
 ## Example
 
 - Write your API with Django Rest Framework and drf-logger.

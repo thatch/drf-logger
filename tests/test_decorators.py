@@ -11,7 +11,7 @@ django.setup()
 from rest_framework.test import APIRequestFactory
 
 import drf_logger.utils
-from drf_logger.decorators import APILoggingDecorator
+from drf_logger.decorators import APILoggingDecorator, _get_logging_function
 
 factory = APIRequestFactory()
 
@@ -22,6 +22,22 @@ ch.setLevel(logging.INFO)
 formatter = drf_logger.utils.SimpleExtraFormatter()
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+
+
+class GetLoggingFunctionTests(unittest.TestCase):
+
+    def test_simple(self):
+        """ A simple test """
+        levels = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
+        for level in levels:
+            ret_func = _get_logging_function(logger, level)
+            expected = eval(f'logger.{level.lower()}')
+            self.assertEqual(ret_func, expected)
+
+    def test_raise(self):
+        """ If invalid level passed. """
+        with self.assertRaises(ValueError) as e:
+            _get_logging_function(logger, 'invalid level')
 
 
 class APILoggingDecoratorTests(unittest.TestCase):
@@ -58,16 +74,3 @@ class APILoggingDecoratorTests(unittest.TestCase):
 
         self.assertIsInstance(ret, Response)
         self.assertEqual(ret.status_code, 200)
-
-    def test_get_logging_function(self):
-        """ A simple test """
-        levels = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
-        for level in levels:
-            ret_func = self.api_logger._get_logging_function(logger, level)
-            expected = eval(f'logger.{level.lower()}')
-            self.assertEqual(ret_func, expected)
-
-    def test_ger_logging_function_raise(self):
-        """ If invalid level passed. """
-        with self.assertRaises(ValueError) as e:
-            self.api_logger._get_logging_function(logger, 'invalid level')

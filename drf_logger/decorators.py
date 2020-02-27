@@ -15,28 +15,28 @@ ch.setFormatter(formatter)
 deco_logger.addHandler(ch)
 
 
+def _get_logging_function(logger: logging.Logger, level: str) -> Callable:
+    level = level.upper()
+    if level == 'DEBUG':
+        return logger.debug
+    elif level == 'INFO':
+        return logger.info
+    elif level == 'WARNING':
+        return logger.warning
+    elif level == 'ERROR':
+        return logger.error
+    elif level == 'CRITICAL':
+        return logger.critical
+    else:
+        raise ValueError(f'Invalid logging level: {level}.')
+
+
 class APILoggingDecorator(object):
 
     def __init__(self, logger=None, level: str = 'INFO'):
         if not isinstance(logger, logging.Logger):
             logger = deco_logger
-        self.log_func = self._get_logging_function(logger, level)
-
-    @staticmethod
-    def _get_logging_function(logger: logging.Logger, level: str) -> Callable:
-        level = level.upper()
-        if level == 'DEBUG':
-            return logger.debug
-        elif level == 'INFO':
-            return logger.info
-        elif level == 'WARNING':
-            return logger.warning
-        elif level == 'ERROR':
-            return logger.error
-        elif level == 'CRITICAL':
-            return logger.critical
-        else:
-            raise ValueError(f'Invalid logging level: {level}.')
+        self.log_func = _get_logging_function(logger, level)
 
     def __call__(self, func: Callable) -> Callable:
         def wrapper(request: Request, **kwargs) -> Response:

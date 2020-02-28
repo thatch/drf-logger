@@ -1,7 +1,7 @@
 # drf-logger
 
 ![GitHub Actions](https://github.com/yutayamazaki/drf-logger/workflows/Python%20package/badge.svg)
-![PyPI Version](https://img.shields.io/pypi/v/drf-logger.svg)
+[![PyPI Version](https://img.shields.io/pypi/v/drf-logger.svg)](https://pypi.org/project/drf-logger/)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 ![GitHub Starts](https://img.shields.io/github/stars/yutayamazaki/drf-logger.svg?style=social)
 ![GitHub Forks](https://img.shields.io/github/forks/yutayamazaki/drf-logger.svg?style=social)

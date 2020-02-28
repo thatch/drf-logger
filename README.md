@@ -24,14 +24,9 @@ import drf_logger
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-formatter = drf_logger.utils.SimpleExtraFormatter()
-ch.setFormatter(formatter)
-logger.addHandler(ch)
-
+# Load logging.Logger object.
+logger = drf_logger.utils.get_default_logger(__name__)
+# Create api_logger decorator.
 api_logger = drf_logger.APILoggingDecorator(logger)
 
 

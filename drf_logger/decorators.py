@@ -33,11 +33,11 @@ class APILoggingDecorator(object):
         self.log_func = _get_logging_function(logger, level)
 
     def __call__(self, func: Callable) -> Callable:
-        def wrapper(request: Request, **kwargs) -> Response:
+        def wrapper(request: Request, *args, **kwargs) -> Response:
             extra = {}
             extra['user_id'] = request.user.id
 
-            response, message = func(request, **kwargs)
+            response, message = func(request, *args.  **kwargs)
 
             extra['status_code'] = response.status_code
             extra['function'] = func.__name__

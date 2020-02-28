@@ -28,8 +28,8 @@ logger = drf_logger.utils.get_default_logger(__name__)
 api_logger = drf_logger.decorators.APILoggingDecorator(logger)
 
 
-@api_logger
 @api_view(['GET'])
+@api_logger
 def sample_api(request):
     message_for_logger = 'A message from sample_api.'
     return Response({'message': 'hello'}), message_for_logger

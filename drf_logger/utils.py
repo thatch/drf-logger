@@ -1,10 +1,10 @@
 import logging
 
 BUILDIN_KEYS = (
-    'args', 'created', 'exc_info', 'exc_text', 'filename', 'funcName',
-    'levelname', 'levelno', 'lineno', 'msecs', 'msg', 'module', 'name',
-    'pathname', 'process', 'processName', 'relativeCreated', 'stack_info',
-    'thread', 'threadName',
+    'args', 'created', 'exc_info', 'exc_text', 'family', 'fd', 'filename',
+    'funcName', 'laddr', 'levelname', 'levelno', 'lineno', 'msecs', 'msg',
+    'module', 'name', 'pathname', 'process', 'processName', 'proto', 'raddr',
+    'relativeCreated', 'request', 'stack_info', 'thread', 'threadName', 'type'
 )
 
 

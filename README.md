@@ -18,8 +18,6 @@ pip install drf-logger
 - Write your API with Django Rest Framework and drf-logger.
 
 ```python
-import logging
-
 import drf_logger
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -27,7 +25,7 @@ from rest_framework.response import Response
 # Load logging.Logger object.
 logger = drf_logger.utils.get_default_logger(__name__)
 # Create api_logger decorator.
-api_logger = drf_logger.APILoggingDecorator(logger)
+api_logger = drf_logger.decorators.APILoggingDecorator(logger)
 
 
 @api_logger

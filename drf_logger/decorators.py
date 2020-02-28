@@ -35,13 +35,16 @@ class APILoggingDecorator(object):
     def __call__(self, func: Callable) -> Callable:
         def wrapper(request: Request, *args, **kwargs) -> Response:
             extra = {}
-            extra['user_id'] = request.user.id
+            extra['function'] = func.__module__ + '.' + func.__qualname__
+
+            # If this decorator used in APIViewSet, request comes as
+            # APIViewSet. And APIViewSet has not attribute user.
+            if isinstance(request, Request):
+                extra['user_id'] = request.user.id
 
             response, message = func(request, *args, **kwargs)
 
             extra['status_code'] = response.status_code
-            extra['function'] = func.__name__
-
             self.log_func(message, extra=extra)
             return response
 

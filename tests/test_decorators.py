@@ -4,11 +4,12 @@ from typing import Callable
 import unittest
 
 import django
-from rest_framework.request import Request
-from rest_framework.response import Response
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 django.setup()
+
 from rest_framework.test import APIRequestFactory
+from rest_framework.request import Request
+from rest_framework.response import Response
 
 import drf_logger.utils
 from drf_logger.decorators import APILoggingDecorator, _get_logging_function

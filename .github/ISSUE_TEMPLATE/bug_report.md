@@ -1,38 +1,38 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help us improve drf-logger.
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Expected behavior
+- I am a clear and concise description.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+## Environment
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+- drf-logger version: 0.0.4
+- Python version: 3.7.2
+- OS: Ubuntu Server 18.4
+- Other libraries and their versions:
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+## Error messages, stack traces, or logs
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+```
+# error messages, stack traces, or logs
+```
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+## How to reproduce
 
-**Additional context**
-Add any other context about the problem here.
+1. Do something.
+2. Do something.
+3. Do something.
+
+## Reproducible examples (optional)
+
+```python
+# python code
+```
+
+## Additional context (optional)

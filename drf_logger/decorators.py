@@ -37,7 +37,7 @@ class APILoggingDecorator(object):
             extra = {}
             extra['user_id'] = request.user.id
 
-            response, message = func(request, *args.  **kwargs)
+            response, message = func(request, *args, **kwargs)
 
             extra['status_code'] = response.status_code
             extra['function'] = func.__name__

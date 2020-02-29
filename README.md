@@ -6,6 +6,12 @@
 ![GitHub Starts](https://img.shields.io/github/stars/yutayamazaki/drf-logger.svg?style=social)
 ![GitHub Forks](https://img.shields.io/github/forks/yutayamazaki/drf-logger.svg?style=social)
 
+## Description
+
+- This is a Python package that can easily get information such as request_id, status_code, user_id, the name of function etc. just by attaching a decorator.
+- Recently, drf-logger supports `rest_framework.decorators.api_view` and` rest_framework.viewsets.ModelViewSet`.
+
+
 ## Installation
 
 ```shell
@@ -30,15 +36,16 @@ api_logger = drf_logger.decorators.APILoggingDecorator(logger)
 
 @api_view(['GET'])
 @api_logger
-def sample_api(request):
-    message_for_logger = 'A message from sample_api.'
+def hello_api(request):
+    logger.info('I am in hello_api.')
+    message_for_logger = 'This is a message from hello_api.'
     return Response({'message': 'hello'}), message_for_logger
 ```
 
 - Then, you can get log like follows.
 
 ```text
-A message from sample_api., user_id=None, status_code=200, function=sample_api
+This is a message from hello_api., function=app.views.hello_api, user_id=None, status_code=200
 ```
 
 

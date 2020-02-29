@@ -16,7 +16,7 @@ api_logger = APILoggingDecorator(logger=logger, level='INFO')
 @api_logger
 def hello_api(request):
     logger.info('I am in hello_api.')
-    return Response({'message': 'hello'}), 'This is a message from drf-logger.'
+    return Response({'message': 'hello'}), 'This is a message from hello_api.'
 
 
 class PersonViewSet(viewsets.ModelViewSet):

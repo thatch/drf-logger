@@ -23,7 +23,7 @@ jobs:
         pip install -r requirements-dev.txt
     - name: Lint with flake8
       run: |
-        flake8 drf_logger
+        flake8 drf_logger example_project
     - name: Test with unittest
       run: |
         coverage run -m unittest discover tests

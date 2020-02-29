@@ -10,6 +10,17 @@ deco_logger = utils.get_default_logger(__name__)
 
 
 def _get_logging_function(logger: logging.Logger, level: str) -> Callable:
+    """ Receive logging.Logger and logging level as args and return logging
+        function which has specified level.
+
+    Args:
+        logger (logging.Logger): A logger instance to output log.
+        level (str): Logging level 'DEBUG', 'INFO', 'WARNING', 'ERROR',
+                     'CRITICAL'.
+
+    Return:
+        Callable: A function to output log.
+    """
     level = level.upper()
     if level == 'DEBUG':
         return logger.debug
@@ -26,6 +37,13 @@ def _get_logging_function(logger: logging.Logger, level: str) -> Callable:
 
 
 class APILoggingDecorator(object):
+
+    """ APILoggingDecorator is a decorator for APIs of DRF.
+
+    Args:
+        logger (logging.Logger): A logger instance.
+        level (str): A logging level used as default.
+    """
 
     def __init__(self, logger=None, level: str = 'INFO'):
         if not isinstance(logger, logging.Logger):

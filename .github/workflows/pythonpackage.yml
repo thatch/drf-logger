@@ -28,6 +28,9 @@ jobs:
       run: |
         coverage run -m unittest discover tests
         coverage report -m
+        cd example_project
+        python manage.py test
+        cd ../
     - name: Mypy type checking
       run: |
         mypy drf_logger

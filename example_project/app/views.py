@@ -15,8 +15,9 @@ api_logger = APILoggingDecorator(logger=logger, level='INFO')
 @api_view(['GET'])
 @api_logger
 def hello_api(request):
-    logger.info('I am in hello_api.')
-    return Response({'message': 'hello'}), 'This is a message from hello_api.'
+    message = 'This is a message from hello_api.'
+    additional = {'message': message}
+    return Response({'message': 'hello'}), additional
 
 
 class PersonViewSet(viewsets.ModelViewSet):
@@ -28,4 +29,5 @@ class PersonViewSet(viewsets.ModelViewSet):
     def list(self, request):
         queryset = Person.objects.all()
         serializer = serializers.PersonSerializer(queryset, many=True)
-        return Response(serializer.data), 'message from list'
+        additional = {'message': 'message from list', 'level': 'WARNING'}
+        return Response(serializer.data), additional

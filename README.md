@@ -37,7 +37,6 @@ api_logger = drf_logger.decorators.APILoggingDecorator(logger)
 @api_view(['GET'])
 @api_logger
 def hello_api(request):
-    logger.info('I am in hello_api.')
     message_for_logger = 'This is a message from hello_api.'
     return Response({'message': 'hello'}), message_for_logger
 ```
@@ -45,7 +44,7 @@ def hello_api(request):
 - Then, you can get log like follows.
 
 ```text
-This is a message from hello_api., function=app.views.hello_api, user_id=None, status_code=200
+This is a message from hello_api., function=app.views.hello_api, user_id=1, status_code=200
 ```
 
 

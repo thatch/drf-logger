@@ -48,8 +48,8 @@ class APILoggingDecoratorTests(unittest.TestCase):
         """ Check a dtype of return value and status_code """
         @self.api_logger
         def mock_api(request):
-            message_for_logger = 'A message.'
-            return Response({'message': 'ok'}), message_for_logger
+            additional = {'message': 'A message.', 'level': 'INFO'}
+            return Response({'message': 'ok'}), additional
 
         http_request = factory.get('/')
         request = Request(http_request)
@@ -63,13 +63,58 @@ class APILoggingDecoratorTests(unittest.TestCase):
         api_logger = APILoggingDecorator(logger='I am logger.')
 
         @api_logger
-        def mock_api_error(request):
-            message_for_logger = 'A message from sample_api.'
-            return Response({'message': 'ok'}), message_for_logger
+        def mock_api(request):
+            message_for_logger = 'A message from mock_api.'
+            additional = {'message': message_for_logger, 'level': 'INFO'}
+            return Response({'message': 'ok'}), additional
 
         http_request = factory.get('/')
         request = Request(http_request)
-        ret = mock_api_error(request)
+        ret = mock_api(request)
+
+        self.assertIsInstance(ret, Response)
+        self.assertEqual(ret.status_code, 200)
+
+    def test_api_without_level(self):
+        """ Return dict with only key: message """
+        @self.api_logger
+        def mock_api(request):
+            message_for_logger = 'A message from mock_api.'
+            additional = {'message': message_for_logger}
+            return Response({'message': 'ok'}), additional
+
+        http_request = factory.get('/')
+        request = Request(http_request)
+        ret = mock_api(request)
+
+        self.assertIsInstance(ret, Response)
+        self.assertEqual(ret.status_code, 200)
+
+    def test_api_without_message(self):
+        """ Return dict with only key: level """
+        @self.api_logger
+        def mock_api(request):
+            additional = {'level': 'INFO'}
+            return Response({'message': 'ok'}), additional
+
+        http_request = factory.get('/')
+        request = Request(http_request)
+        ret = mock_api(request)
+
+        self.assertIsInstance(ret, Response)
+        self.assertEqual(ret.status_code, 200)
+
+    def test_api_invalid_level(self):
+        """ A test for invalid level. """
+        @self.api_logger
+        def mock_api(request):
+            message = 'Invalid level.'
+            additional = {'message': message, 'level': 'INVALID_LEVEL'}
+            return Response({'message': 'ok'}), additional
+
+        http_request = factory.get('/')
+        request = Request(http_request)
+        ret = mock_api(request)
 
         self.assertIsInstance(ret, Response)
         self.assertEqual(ret.status_code, 200)

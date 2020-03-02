@@ -8,6 +8,8 @@ from drf_logger import utils
 
 deco_logger = utils.get_default_logger(__name__)
 
+LOG_LEVELS = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
+
 
 def _get_logging_function(logger: logging.Logger, level: str) -> Callable:
     """ Receive logging.Logger and logging level as args and return logging
@@ -48,7 +50,7 @@ class APILoggingDecorator(object):
     def __init__(self, logger=None, level: str = 'INFO'):
         if not isinstance(logger, logging.Logger):
             logger = deco_logger
-        self.log_func = _get_logging_function(logger, level)
+        self.logger = logger
 
     def __call__(self, func: Callable) -> Callable:
         def wrapper(request: Request, *args, **kwargs) -> Response:
@@ -62,10 +64,18 @@ class APILoggingDecorator(object):
             if isinstance(request, Request):
                 extra['user_id'] = request.user.id
 
-            response, message = func(request, *args, **kwargs)
+            response, additionals = func(request, *args, **kwargs)
+
+            message = additionals.get('message', '')
+            level = additionals.get('level', LOG_LEVELS[1])
+
+            if level.upper() not in LOG_LEVELS:
+                level = 'INFO'
+            log_func = _get_logging_function(self.logger, level)
 
             extra['status_code'] = response.status_code
-            self.log_func(message, extra=extra)
+
+            log_func(message, extra=extra)
             return response
 
         return wrapper

@@ -66,15 +66,12 @@ class APILoggingDecorator(object):
 
             response, additionals = func(request, *args, **kwargs)
 
+            extra['status_code'] = response.status_code
+
             message = additionals.get('message', '')
             level = additionals.get('level', LOG_LEVELS[1])
 
-            if level.upper() not in LOG_LEVELS:
-                level = 'INFO'
             log_func = _get_logging_function(self.logger, level)
-
-            extra['status_code'] = response.status_code
-
             log_func(message, extra=extra)
             return response
 

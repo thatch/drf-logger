@@ -54,6 +54,12 @@ class APILoggingDecorator(object):
 
     def __call__(self, func: Callable) -> Callable:
         def wrapper(request: Request, *args, **kwargs) -> Response:
+
+            # In case decorator used in ModelViewSet.
+            if len(args) == 1:
+                if isinstance(args[0], Request):
+                    request = args[0]
+
             extra = {}
             extra['function'] = func.__module__ + '.' + func.__qualname__
 

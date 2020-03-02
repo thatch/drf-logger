@@ -8,7 +8,7 @@
 
 ## Description
 
-- This is a Python package that can easily get information such as request_id, status_code, user_id, the name of function etc. just by attaching a decorator.
+- This is a Python package that can easily get information such as status_code, user_id, the name of function etc. just by attaching a decorator.
 - Recently, drf-logger supports `rest_framework.decorators.api_view` and` rest_framework.viewsets.ModelViewSet`.
 
 

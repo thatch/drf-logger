@@ -35,7 +35,7 @@ def _get_logging_function(logger: logging.Logger, level: str) -> Callable:
     elif level == 'CRITICAL':
         return logger.critical
     else:
-        raise ValueError(f'Invalid logging level: {level}.')
+        return logger.info
 
 
 class APILoggingDecorator(object):

@@ -26,13 +26,13 @@ class GetLoggingFunctionTests(unittest.TestCase):
         levels = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
         for level in levels:
             ret_func = _get_logging_function(logger, level)
-            expected = eval(f'logger.{level.lower()}')
+            expected = getattr(logger, level.lower())
             self.assertEqual(ret_func, expected)
 
-    def test_raise(self):
+    def test_invalid_level(self):
         """ If invalid level passed. """
-        with self.assertRaises(ValueError) as e:
-            _get_logging_function(logger, 'invalid level')
+        ret_func = _get_logging_function(logger, 'invalid_level')
+        self.assertEqual(ret_func, logger.info)
 
 
 class APILoggingDecoratorTests(unittest.TestCase):

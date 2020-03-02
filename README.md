@@ -48,6 +48,25 @@ def hello_api(request):
 This is a message from hello_api., function=app.views.hello_api, user_id=1, status_code=200
 ```
 
+- You can use APILoggingDecorator in ModeViewSet too.
+
+```python
+class PersonViewSet(viewsets.ModelViewSet):
+
+    queryset = Person.objects.all()
+    serializer_class = serializers.PersonSerializer
+
+    @api_logger
+    def list(self, request):
+        queryset = Person.objects.all()
+        serializer = serializers.PersonSerializer(queryset, many=True)
+        additional = {'message': 'message from list', 'level': 'WARNING'}
+        return Response(serializer.data), additional
+```
+
+```shell
+message from list, function=app.views.PersonViewSet.list, user_id=1, status_code=200
+```
 
 ## A procedure to register to PyPI.
 

@@ -5,8 +5,12 @@ from rest_framework import status
 class HelloAPITests(APITestCase):
 
     url = '/app/hello/'
+    fixtures = ['db.yaml']
 
     def test_simple(self):
+        # To output user_id.
+        self.client.login(username='drf-user', password='password')
+
         r = self.client.get(self.url)
         self.assertTrue(status.is_success(r.status_code))
 

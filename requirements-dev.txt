@@ -3,3 +3,4 @@ coverage
 flake8
 mypy
 pylint
+pyyaml==5.3

@@ -57,6 +57,8 @@ class APILoggingDecorator(object):
 
             # If this decorator used in APIViewSet, request comes as
             # APIViewSet. And APIViewSet has not attribute user.
+            # request.user is django User model or
+            # django.contrib.auth.models.AnonymousUser.
             if isinstance(request, Request):
                 extra['user_id'] = request.user.id
 

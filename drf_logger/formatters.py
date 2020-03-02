@@ -27,6 +27,10 @@ class SimpleExtraFormatter(Formatter):
 
 class JSONExtraFormatter(Formatter):
 
+    @staticmethod
+    def _dict_to_string(dic: dict) -> str:
+        return json.dumps(dic, ensure_ascii=False)
+
     def format(self, record) -> str:
         """
         Notes:
@@ -41,4 +45,4 @@ class JSONExtraFormatter(Formatter):
             if k not in KEYS_TO_IGNORE:
                 dict_to_record[k] = v
 
-        return json.dumps(dict_to_record)
+        return self._dict_to_string(dict_to_record)

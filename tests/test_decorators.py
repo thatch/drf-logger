@@ -38,7 +38,11 @@ class GetLoggingFunctionTests(unittest.TestCase):
 class APILoggingDecoratorTests(unittest.TestCase):
 
     def setUp(self):
-        self.api_logger = APILoggingDecorator(logger=logger)
+        self.logger = drf_logger.utils.get_default_logger(
+            __name__,
+            format_='simple'
+        )
+        self.api_logger = APILoggingDecorator(logger=self.logger)
 
     def test_simple(self):
         """ Check a dtype of return value and status_code """

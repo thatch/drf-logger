@@ -82,3 +82,9 @@ python setup.py sdist bdist_wheel
 # Upload to PyPI.
 twine upload dist/*
 ```
+
+## Development
+```bash
+# in project root
+% docker-compose up # you can develop drf-logger while running sample django app. http://localhost:8000
+```

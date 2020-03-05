@@ -7,10 +7,9 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./example_project:/workdir
-      - ./drf_logger:/workdir/drf_logger
-      - ./tests:/workdir/tests
+      - ./:/workdir
     command: >
-      bash -c "python manage.py makemigrations &&
+      bash -c "cd example_project &&
+               python manage.py makemigrations &&
                python manage.py migrate &&
                python manage.py runserver 0.0.0.0:8000"

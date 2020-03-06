@@ -55,8 +55,9 @@ class APILoggingDecorator(object):
     def __call__(self, func: Callable) -> Callable:
         def wrapper(request: Request, *args, **kwargs) -> Response:
 
-            # In case decorator used in ModelViewSet.
-            if len(args) == 1:
+            # In case decorator used in class based views like
+            # rest_framework.viewsets.ModelViewSet, rest_framework.APIView.
+            if len(args) >= 1:
                 if isinstance(args[0], Request):
                     request = args[0]
 

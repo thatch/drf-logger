@@ -8,6 +8,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 django.setup()
 
 from rest_framework.test import APIRequestFactory
+from rest_framework.views import APIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -115,6 +116,24 @@ class APILoggingDecoratorTests(unittest.TestCase):
         http_request = factory.get('/')
         request = Request(http_request)
         ret = mock_api(request)
+
+        self.assertIsInstance(ret, Response)
+        self.assertEqual(ret.status_code, 200)
+
+    def test_class_based_view(self):
+        """ A test for class based view.
+            Class based views pass it-self for arguments.
+        """
+        class MockAPIView(APIView):
+
+            @self.api_logger
+            def get(self, request):
+                additional = {'message': 'have a nice weekend'}
+                return Response({}), additional
+
+        request = factory.get('/')
+        mock_view = MockAPIView.as_view()
+        ret = mock_view(request)
 
         self.assertIsInstance(ret, Response)
         self.assertEqual(ret.status_code, 200)

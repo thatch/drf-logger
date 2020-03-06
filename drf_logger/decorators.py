@@ -57,9 +57,10 @@ class APILoggingDecorator(object):
 
             # In case decorator used in class based views like
             # rest_framework.viewsets.ModelViewSet, rest_framework.APIView.
-            if len(args) >= 1:
-                if isinstance(args[0], Request):
-                    request = args[0]
+            if not isinstance(request, Request):
+                if len(args) >= 1:
+                    if isinstance(args[0], Request):
+                        request = args[0]
 
             extra = {}
             extra['function'] = func.__module__ + '.' + func.__qualname__

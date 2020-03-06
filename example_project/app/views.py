@@ -1,7 +1,8 @@
 from logging import getLogger
 
 from drf_logger.decorators import APILoggingDecorator
-from rest_framework import viewsets
+from rest_framework import status, viewsets
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -31,3 +32,19 @@ class PersonViewSet(viewsets.ModelViewSet):
         serializer = serializers.PersonSerializer(queryset, many=True)
         additional = {'message': 'message from list', 'level': 'WARNING'}
         return Response(serializer.data), additional
+
+
+class PersonAPIView(APIView):
+
+    @api_logger
+    def post(self, request):
+        serializer = serializers.PersonSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            additional = {'message': 'kw'}
+            res = Response(serializer.data, status=status.HTTP_201_CREATED)
+            return res, additional
+
+        additional = {'message': 'kw', 'level': 'ERROR'}
+        res = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return res, additional

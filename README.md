@@ -6,10 +6,15 @@
 ![GitHub Starts](https://img.shields.io/github/stars/yutayamazaki/drf-logger.svg?style=social)
 ![GitHub Forks](https://img.shields.io/github/forks/yutayamazaki/drf-logger.svg?style=social)
 
+## Features
+
+- Logging satus_code, user_id, the name of function, message from view, etc just by attaching a decorator.
+- Readable formatters for logging.Logger like `SimpleExtraFormatter`, `JSONExtraFormatter`.
+
+
 ## Description
 
 - This is a Python package that can easily get information such as status_code, user_id, the name of function etc. just by attaching a decorator.
-- Recently, drf-logger supports `rest_framework.decorators.api_view` and` rest_framework.viewsets.ModelViewSet`.
 
 
 ## Installation

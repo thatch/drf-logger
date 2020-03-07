@@ -9,7 +9,9 @@ services:
     volumes:
       - ./:/workdir
     command: >
-      bash -c "cd example_project &&
+      bash -c "pip uninstall drf-logger &&
+               python setup.py develop &&
+               cd example_project &&
                python manage.py makemigrations &&
                python manage.py migrate &&
                python manage.py runserver 0.0.0.0:8000"

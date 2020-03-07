@@ -68,6 +68,10 @@ class PersonViewSet(viewsets.ModelViewSet):
 message from list, function=app.views.PersonViewSet.list, user_id=1, status_code=200
 ```
 
+## Contributing
+- You can see how to contribute to this project in [CONTRIBUTING.md](https://github.com/yutayamazaki/drf-logger/blob/master/CONTRIBUTING.md).
+
+
 ## A procedure to register to PyPI.
 
 ```shell

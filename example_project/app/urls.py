@@ -23,5 +23,6 @@ router.register('person', views.PersonViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('hello/', views.hello_api)
+    path('hello/', views.hello_api),
+    path('person_api/', views.PersonAPIView.as_view()),
 ]

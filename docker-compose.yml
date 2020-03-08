@@ -9,7 +9,7 @@ services:
     volumes:
       - ./:/workdir
     command: >
-      bash -c "pip uninstall drf-logger &&
+      bash -c "pip uninstall -y drf-logger &&
                python setup.py develop &&
                cd example_project &&
                python manage.py makemigrations &&

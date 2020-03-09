@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('hello/', views.hello_api),
     path('person_api/', views.PersonAPIView.as_view()),
+    path('django_json/', views.django_json),
 ]

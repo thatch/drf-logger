@@ -1,5 +1,6 @@
 from logging import getLogger
 
+from django.http import JsonResponse
 from drf_logger.decorators import APILoggingDecorator
 from rest_framework import status, viewsets
 from rest_framework.views import APIView
@@ -48,3 +49,10 @@ class PersonAPIView(APIView):
         additional = {'message': 'kw', 'level': 'ERROR'}
         res = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return res, additional
+
+
+@api_logger
+def django_json(request):
+    data = {'name': 'django_json'}
+    additional = {'message': 'I am from json response.'}
+    return JsonResponse(data), additional

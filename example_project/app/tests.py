@@ -40,3 +40,12 @@ class PersonAPIViewTests(APITestCase):
         params = {'name': 24, 'age': 'yutayamazaki'}
         r = self.client.post(self.url, params)
         self.assertFalse(status.is_success(r.status_code))
+
+
+class DjangoJsonTests(APITestCase):
+
+    url = '/app/django_json/'
+
+    def test_success(self):
+        r = self.client.get(self.url)
+        self.assertTrue(status.is_success(r.status_code))

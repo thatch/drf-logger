@@ -1,8 +1,8 @@
 import logging
 from typing import Callable
 
+from django.http import HttpRequest
 from rest_framework.request import Request
-from rest_framework.response import Response
 
 from drf_logger import utils
 
@@ -53,11 +53,11 @@ class APILoggingDecorator(object):
         self.logger = logger
 
     def __call__(self, func: Callable) -> Callable:
-        def wrapper(request: Request, *args, **kwargs) -> Response:
+        def wrapper(request, *args, **kwargs):
 
             # In case decorator used in class based views like
             # rest_framework.viewsets.ModelViewSet, rest_framework.APIView.
-            if not isinstance(request, Request):
+            if not isinstance(request, (HttpRequest, Request)):
                 if len(args) >= 1:
                     if isinstance(args[0], Request):
                         request = args[0]
@@ -65,11 +65,9 @@ class APILoggingDecorator(object):
             extra = {}
             extra['function'] = func.__module__ + '.' + func.__qualname__
 
-            # If this decorator used in APIViewSet, request comes as
-            # APIViewSet. And APIViewSet has not attribute user.
             # request.user is django User model or
             # django.contrib.auth.models.AnonymousUser.
-            if isinstance(request, Request):
+            if isinstance(request, (HttpRequest, Request)):
                 extra['user_id'] = request.user.id
 
             response, additionals = func(request, *args, **kwargs)

@@ -1,6 +1,7 @@
 import logging
 from typing import Callable
 
+from django.http import HttpRequest
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -65,11 +66,9 @@ class APILoggingDecorator(object):
             extra = {}
             extra['function'] = func.__module__ + '.' + func.__qualname__
 
-            # If this decorator used in APIViewSet, request comes as
-            # APIViewSet. And APIViewSet has not attribute user.
             # request.user is django User model or
             # django.contrib.auth.models.AnonymousUser.
-            if isinstance(request, Request):
+            if isinstance(request, (HttpRequest, Request)):
                 extra['user_id'] = request.user.id
 
             response, additionals = func(request, *args, **kwargs)

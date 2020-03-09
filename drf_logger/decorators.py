@@ -3,7 +3,6 @@ from typing import Callable
 
 from django.http import HttpRequest
 from rest_framework.request import Request
-from rest_framework.response import Response
 
 from drf_logger import utils
 
@@ -54,7 +53,7 @@ class APILoggingDecorator(object):
         self.logger = logger
 
     def __call__(self, func: Callable) -> Callable:
-        def wrapper(request, *args, **kwargs) -> Response:
+        def wrapper(request, *args, **kwargs):
 
             # In case decorator used in class based views like
             # rest_framework.viewsets.ModelViewSet, rest_framework.APIView.

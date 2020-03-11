@@ -4,7 +4,7 @@ from rest_framework import status
 
 class HelloAPITests(APITestCase):
 
-    url = '/app/hello/'
+    url = '/api/hello/'
     fixtures = ['db.yaml']
 
     def test_simple(self):
@@ -17,7 +17,7 @@ class HelloAPITests(APITestCase):
 
 class PersonViewSetTests(APITestCase):
 
-    url = '/app/person/'
+    url = '/api/person/'
 
     def test_list(self):
         r = self.client.get(self.url)
@@ -26,7 +26,7 @@ class PersonViewSetTests(APITestCase):
 
 class PersonAPIViewTests(APITestCase):
 
-    url = '/app/person_api/'
+    url = '/api/person_api/'
 
     def test_201(self):
         params = {'name': 'yutayamazaki', 'age': 24}
@@ -44,7 +44,7 @@ class PersonAPIViewTests(APITestCase):
 
 class DjangoJsonTests(APITestCase):
 
-    url = '/app/django_json/'
+    url = '/api/django_json/'
 
     def test_success(self):
         r = self.client.get(self.url)

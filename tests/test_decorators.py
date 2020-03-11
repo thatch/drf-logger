@@ -137,3 +137,16 @@ class APILoggingDecoratorTests(unittest.TestCase):
 
         self.assertIsInstance(ret, Response)
         self.assertEqual(ret.status_code, 200)
+
+    def test_api_returns_only_response(self):
+        """ A test for api that returns only response object. """
+        @self.api_logger
+        def mock_api(request):
+            return Response({'message': 'ok'})
+
+        http_request = factory.get('/')
+        request = Request(http_request)
+        ret = mock_api(request)
+
+        self.assertIsInstance(ret, Response)
+        self.assertEqual(ret.status_code, 200)

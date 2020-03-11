@@ -1,6 +1,7 @@
+import datetime
 from logging import getLogger
 
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from drf_logger.decorators import APILoggingDecorator
 from rest_framework import status, viewsets
 from rest_framework.views import APIView
@@ -56,3 +57,11 @@ def django_json(request):
     data = {'name': 'django_json'}
     additional = {'message': 'I am from json response.'}
     return JsonResponse(data), additional
+
+
+@api_logger
+def http_now(request):
+    now = datetime.datetime.now()
+    msg = f'datetime: {now}'
+    additional = {'message': 'kw', 'level': 'INFO'}
+    return HttpResponse(msg, content_type='text/plain'), additional

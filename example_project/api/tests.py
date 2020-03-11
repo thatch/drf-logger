@@ -49,3 +49,12 @@ class DjangoJsonTests(APITestCase):
     def test_success(self):
         r = self.client.get(self.url)
         self.assertTrue(status.is_success(r.status_code))
+
+
+class HttpNowTests(APITestCase):
+
+    url = '/api/now/'
+
+    def test_success(self):
+        r = self.client.get(self.url)
+        self.assertTrue(status.is_success(r.status_code))

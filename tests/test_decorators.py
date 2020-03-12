@@ -7,13 +7,17 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 django.setup()
 
+from django.http import HttpRequest
+from django.core.handlers.wsgi import WSGIRequest
 from rest_framework.test import APIRequestFactory
 from rest_framework.views import APIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 
 import drf_logger.utils
-from drf_logger.decorators import APILoggingDecorator, _get_logging_function
+from drf_logger.decorators import (
+    is_request_instance, APILoggingDecorator, _get_logging_function
+)
 
 factory = APIRequestFactory()
 
@@ -34,6 +38,24 @@ class GetLoggingFunctionTests(unittest.TestCase):
         """ If invalid level passed. """
         ret_func = _get_logging_function(logger, 'invalid_level')
         self.assertEqual(ret_func, logger.info)
+
+
+class IsRequestInstanceTests(unittest.TestCase):
+
+    def test_django_http_request(self):
+        """ django.http.HttpRequest """
+        request = HttpRequest()
+        self.assertTrue(is_request_instance(request))
+
+    def test_drf_request(self):
+        """ rest_framework.request.Request """
+        request = Request(HttpRequest())
+        self.assertTrue(is_request_instance(request))
+
+    def test_django_wsgi_request(self):
+        """ rest_framework.request.Request """
+        request = WSGIRequest({'REQUEST_METHOD': 'GET', 'wsgi.input': ''})
+        self.assertTrue(is_request_instance(request))
 
 
 class APILoggingDecoratorTests(unittest.TestCase):

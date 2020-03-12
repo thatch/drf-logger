@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app import models
+from api import models
 
 # Register your models here.
 admin.site.register(models.Person)

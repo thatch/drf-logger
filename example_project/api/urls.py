@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path, include
 from rest_framework import routers
 
-from app import views
+from api import views
 
 router = routers.DefaultRouter()
 router.register('person', views.PersonViewSet)
@@ -26,4 +26,5 @@ urlpatterns = [
     path('hello/', views.hello_api),
     path('person_api/', views.PersonAPIView.as_view()),
     path('django_json/', views.django_json),
+    path('now/', views.http_now)
 ]

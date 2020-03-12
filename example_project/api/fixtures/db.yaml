@@ -1,4 +1,4 @@
-- model: app.user
+- model: api.user
   pk: 1
   fields:
     username: drf-user

@@ -3,4 +3,4 @@ max-line-length = 79
 exclude =
     drf_logger/__init__.py
     example_project/config/settings.py
-    example_project/app/migrations/*.py
+    example_project/api/migrations/*.py

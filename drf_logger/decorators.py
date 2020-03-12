@@ -78,9 +78,9 @@ class APILoggingDecorator(object):
 
                 msg = f'API: {extra["function"]} only returns ' \
                       f'{type(response)}. If you attatch ' \
-                       'drf_logger.decorators.APILoggingDecorator to your ' \
-                       'views, you should return additional logging context' \
-                       ' like {"message": "Hello.", "level": "INFO"}.'
+                      'drf_logger.decorators.APILoggingDecorator to your ' \
+                      'views, you should return additional logging context' \
+                      ' like {"message": "Hello.", "level": "INFO"}.'
                 warnings.warn(msg)
 
                 extra['status_code'] = response.status_code

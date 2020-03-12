@@ -1,4 +1,5 @@
 import logging
+import warnings
 from typing import Callable
 
 from django.http import HttpRequest
@@ -70,7 +71,25 @@ class APILoggingDecorator(object):
             if isinstance(request, (HttpRequest, Request)):
                 extra['user_id'] = request.user.id
 
-            response, additionals = func(request, *args, **kwargs)
+            return_values = func(request, *args, **kwargs)
+            # The view returns only response object.
+            if not isinstance(return_values, tuple):
+                response = return_values
+
+                msg = f'API: {extra["function"]} only returns ' \
+                      f'{type(response)}. If you attatch ' \
+                      'drf_logger.decorators.APILoggingDecorator to your ' \
+                      'views, you should return additional logging context' \
+                      ' like {"message": "Hello.", "level": "INFO"}.'
+                warnings.warn(msg)
+
+                extra['status_code'] = response.status_code
+                log_func = _get_logging_function(self.logger, 'INFO')
+                log_func(msg='', extra=extra)
+                return response
+
+            response = return_values[0]
+            additionals = return_values[1]
 
             extra['status_code'] = response.status_code
 

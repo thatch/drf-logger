@@ -39,7 +39,7 @@ def _get_logging_function(logger: logging.Logger, level: str) -> Callable:
         return logger.info
 
 
-def is_request_instance(request) -> bool:
+def is_request_instance(request: Any) -> bool:
     """ Check is django request instance or not """
     django_request_objects: Tuple[Any, ...] = (HttpRequest, Request)
     return isinstance(request, django_request_objects)

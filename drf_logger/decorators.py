@@ -3,6 +3,7 @@ import warnings
 from typing import Callable
 
 from django.http import HttpRequest
+from django.utils import timezone
 from rest_framework.request import Request
 
 from drf_logger import utils
@@ -65,11 +66,13 @@ class APILoggingDecorator(object):
 
             extra = {}
             extra['function'] = func.__module__ + '.' + func.__qualname__
+            extra['time'] = str(timezone.now())
 
             # request.user is django User model or
             # django.contrib.auth.models.AnonymousUser.
             if isinstance(request, (HttpRequest, Request)):
                 extra['user_id'] = request.user.id
+                extra['method'] = request.method
 
             return_values = func(request, *args, **kwargs)
             # The view returns only response object.

@@ -1,6 +1,6 @@
 import logging
 import warnings
-from typing import Callable
+from typing import Any, Callable, Tuple
 
 from django.http import HttpRequest
 from rest_framework.request import Request
@@ -39,6 +39,12 @@ def _get_logging_function(logger: logging.Logger, level: str) -> Callable:
         return logger.info
 
 
+def is_request_instance(request: Any) -> bool:
+    """ Check is django request instance or not """
+    django_request_objects: Tuple[Any, ...] = (HttpRequest, Request)
+    return isinstance(request, django_request_objects)
+
+
 class APILoggingDecorator(object):
 
     """ APILoggingDecorator is a decorator for APIs of DRF.
@@ -58,9 +64,9 @@ class APILoggingDecorator(object):
 
             # In case decorator used in class based views like
             # rest_framework.viewsets.ModelViewSet, rest_framework.APIView.
-            if not isinstance(request, (HttpRequest, Request)):
+            if not is_request_instance(request):
                 if len(args) >= 1:
-                    if isinstance(args[0], Request):
+                    if is_request_instance(args[0]):
                         request = args[0]
 
             extra = {}
@@ -68,7 +74,7 @@ class APILoggingDecorator(object):
 
             # request.user is django User model or
             # django.contrib.auth.models.AnonymousUser.
-            if isinstance(request, (HttpRequest, Request)):
+            if is_request_instance(request):
                 extra['user_id'] = request.user.id
 
             return_values = func(request, *args, **kwargs)

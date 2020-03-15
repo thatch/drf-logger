@@ -1,3 +1,5 @@
+import json
+
 from rest_framework.test import APITestCase
 from rest_framework import status
 
@@ -58,3 +60,14 @@ class HttpNowTests(APITestCase):
     def test_success(self):
         r = self.client.get(self.url)
         self.assertTrue(status.is_success(r.status_code))
+
+
+class DjangoViewTests(APITestCase):
+
+    url = '/api/django_view/'
+
+    def test_success(self):
+        r = self.client.get(self.url)
+        self.assertTrue(status.is_success(r.status_code))
+        response_data = json.loads(r.content.decode('utf-8'))
+        self.assertDictEqual(response_data, {'message': 'I am django boy.'})

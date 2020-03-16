@@ -65,10 +65,11 @@ class APILoggingDecorator(object):
 
             # In case decorator used in class based views like
             # rest_framework.viewsets.ModelViewSet, rest_framework.APIView.
-            if not is_request_instance(request):
+            request_obj = request
+            if not is_request_instance(request_obj):
                 if len(args) >= 1:
                     if is_request_instance(args[0]):
-                        request = args[0]
+                        request_obj = args[0]
 
             extra = {}
             extra['function'] = func.__module__ + '.' + func.__qualname__
@@ -76,9 +77,9 @@ class APILoggingDecorator(object):
 
             # request.user is django User model or
             # django.contrib.auth.models.AnonymousUser.
-            if is_request_instance(request):
-                extra['user_id'] = request.user.id
-                extra['method'] = request.method
+            if is_request_instance(request_obj):
+                extra['user_id'] = request_obj.user.id
+                extra['method'] = request_obj.method
 
             return_values = func(request, *args, **kwargs)
             # The view returns only response object.

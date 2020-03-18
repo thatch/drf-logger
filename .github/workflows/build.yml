@@ -30,7 +30,7 @@ jobs:
         flake8 drf_logger example_project
     - name: Test with unittest
       run: |
-        coverage run -m unittest discover tests
+        coverage run -m pytest tests
         coverage report -m
     - name: Test on django project
       run: |

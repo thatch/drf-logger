@@ -50,7 +50,7 @@ def hello_api(request):
 - Then, you can get log like follows.
 
 ```text
-This is a message from hello_api., function=app.views.hello_api, user_id=1, status_code=200
+This is a message from hello_api., function=api.views.hello_api, time=2020-03-18 13:09:19.524105+00:00, ip=127.0.0.1, user_id=1, method=GET, status_code=200
 ```
 
 - You can use APILoggingDecorator in ModeViewSet too.

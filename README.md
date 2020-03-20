@@ -77,11 +77,11 @@ message from list, function=app.views.PersonViewSet.list, user_id=1, status_code
 
 |  data  |  key  |  APILoggingDecorator  |  APILoggingMixin  |
 |---|---|---|---|
-|  name of the api  |  func  |  yes  |  no  |
-|  ip address  |  ip  |  yes  |  yes  |
-|  django user id  |  user_id  |  yes  |  yes  |
-|  http method  |  method  |  yes  |  yes  |
-|  status_code  |  status_code  |  yes  |  yes  |
+|  name of the api  |  func  |  :white_check_mark:  |    |
+|  ip address  |  ip  |  :white_check_mark:  |  :white_check_mark:  |
+|  django user id  |  user_id  |  :white_check_mark:  |  :white_check_mark:  |
+|  http method  |  method  |  :white_check_mark:  |  :white_check_mark:  |
+|  status_code  |  status_code  |  :white_check_mark:  |  :white_check_mark:  |
 
 
 ## Contributing

@@ -71,3 +71,14 @@ class DjangoViewTests(APITestCase):
         self.assertTrue(status.is_success(r.status_code))
         response_data = json.loads(r.content.decode('utf-8'))
         self.assertDictEqual(response_data, {'message': 'I am django boy.'})
+
+
+class MixinForClassBasedViewTests(APITestCase):
+
+    url = '/api/mixin/'
+
+    def test_success(self):
+        r = self.client.get(self.url)
+        self.assertTrue(status.is_success(r.status_code))
+        response_data = json.loads(r.content.decode('utf-8'))
+        self.assertDictEqual(response_data, {'message': 'Hello mixin.'})

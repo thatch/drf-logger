@@ -27,5 +27,6 @@ urlpatterns = [
     path('person_api/', views.PersonAPIView.as_view()),
     path('django_json/', views.django_json),
     path('django_view/', views.DjangoView.as_view()),
+    path('mixin/', views.MixinClassBasedView.as_view()),
     path('now/', views.http_now)
 ]

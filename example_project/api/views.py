@@ -4,6 +4,7 @@ from logging import getLogger
 from django.http import HttpResponse, JsonResponse
 from django.views import View
 from drf_logger.decorators import APILoggingDecorator
+from drf_logger.mixins import APILoggingMixin
 from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -74,3 +75,10 @@ class DjangoView(View):
     def get(self, request, *args, **kwargs):
         additional = {'message': 'I am DjangoView'}
         return JsonResponse({'message': 'I am django boy.'}), additional
+
+
+class MixinClassBasedView(APILoggingMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        additional = {'message': 'I am MixinView'}
+        return JsonResponse({'message': 'Hello mixin.'}), additional

@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Callable
+from typing import Callable, Dict
 import unittest
 
 import django
@@ -16,7 +16,8 @@ from rest_framework.response import Response
 
 import drf_logger.utils
 from drf_logger.decorators import (
-    is_request_instance, APILoggingDecorator, _get_logging_function
+    is_request_instance, APILoggingDecorator, _get_logging_function,
+    _get_client_ip
 )
 
 factory = APIRequestFactory()
@@ -56,6 +57,19 @@ class IsRequestInstanceTests(unittest.TestCase):
         """ rest_framework.request.Request """
         request = WSGIRequest({'REQUEST_METHOD': 'GET', 'wsgi.input': ''})
         self.assertTrue(is_request_instance(request))
+
+
+class GetClientIpTests(unittest.TestCase):
+
+    def test_simple(self):
+        params: Dict[str, str] = {
+            'REQUEST_METHOD': 'GET',
+            'wsgi.input': '',
+            'REMOTE_ADDR': '127.0.0.0'
+        }
+        request = WSGIRequest(params)
+        ip = _get_client_ip(request)
+        assert ip == params['REMOTE_ADDR']
 
 
 class APILoggingDecoratorTests(unittest.TestCase):

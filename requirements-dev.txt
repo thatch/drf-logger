@@ -3,4 +3,5 @@ coverage
 flake8
 mypy
 pylint
+pytest
 pyyaml==5.3

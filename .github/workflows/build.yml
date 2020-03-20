@@ -40,4 +40,4 @@ jobs:
         cd ../
     - name: Mypy type checking
       run: |
-        mypy drf_logger
+        mypy drf_logger example_project tests

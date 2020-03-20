@@ -5,10 +5,13 @@ from typing import Callable
 from django.utils import timezone
 
 from drf_logger import utils
-
-deco_logger = utils.get_default_logger(__name__)
+from drf_logger._utils import (
+    _get_client_ip, _get_logging_function, _is_request_instance
+)
 
 LOG_LEVELS = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
+
+deco_logger = utils.get_default_logger(__name__)
 
 
 class APILoggingDecorator(object):
@@ -31,19 +34,19 @@ class APILoggingDecorator(object):
             # In case decorator used in class based views like
             # rest_framework.viewsets.ModelViewSet, rest_framework.APIView.
             request_obj = request
-            if not utils.is_request_instance(request_obj):
+            if not _is_request_instance(request_obj):
                 if len(args) >= 1:
-                    if utils.is_request_instance(args[0]):
+                    if _is_request_instance(args[0]):
                         request_obj = args[0]
 
             extra = {}
             extra['function'] = func.__module__ + '.' + func.__qualname__
             extra['time'] = str(timezone.now())
-            extra['ip'] = utils.get_client_ip(request_obj)
+            extra['ip'] = _get_client_ip(request_obj)
 
             # request.user is django User model or
             # django.contrib.auth.models.AnonymousUser.
-            if utils.is_request_instance(request_obj):
+            if _is_request_instance(request_obj):
                 extra['user_id'] = request_obj.user.id
                 extra['method'] = request_obj.method
 
@@ -60,7 +63,7 @@ class APILoggingDecorator(object):
                 warnings.warn(msg)
 
                 extra['status_code'] = response.status_code
-                log_func = utils.get_logging_function(self.logger, 'INFO')
+                log_func = _get_logging_function(self.logger, 'INFO')
                 log_func(msg='', extra=extra)
                 return response
 
@@ -72,7 +75,7 @@ class APILoggingDecorator(object):
             message = additionals.get('message', '')
             level = additionals.get('level', LOG_LEVELS[1])
 
-            log_func = utils.get_logging_function(self.logger, level)
+            log_func = _get_logging_function(self.logger, level)
             log_func(message, extra=extra)
             return response
 

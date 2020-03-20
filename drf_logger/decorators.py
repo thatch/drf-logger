@@ -13,33 +13,6 @@ deco_logger = utils.get_default_logger(__name__)
 LOG_LEVELS = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
 
 
-def _get_logging_function(logger: logging.Logger, level: str) -> Callable:
-    """ Receive logging.Logger and logging level as args and return logging
-        function which has specified level.
-
-    Args:
-        logger (logging.Logger): A logger instance to output log.
-        level (str): Logging level 'DEBUG', 'INFO', 'WARNING', 'ERROR',
-                     'CRITICAL'.
-
-    Return:
-        Callable: A function to output log.
-    """
-    level = level.upper()
-    if level == 'DEBUG':
-        return logger.debug
-    elif level == 'INFO':
-        return logger.info
-    elif level == 'WARNING':
-        return logger.warning
-    elif level == 'ERROR':
-        return logger.error
-    elif level == 'CRITICAL':
-        return logger.critical
-    else:
-        return logger.info
-
-
 def is_request_instance(request: Any) -> bool:
     """ Check is django request instance or not """
     django_request_objects: Tuple[Any, ...] = (HttpRequest, Request)
@@ -94,7 +67,7 @@ class APILoggingDecorator(object):
                 warnings.warn(msg)
 
                 extra['status_code'] = response.status_code
-                log_func = _get_logging_function(self.logger, 'INFO')
+                log_func = utils.get_logging_function(self.logger, 'INFO')
                 log_func(msg='', extra=extra)
                 return response
 
@@ -106,7 +79,7 @@ class APILoggingDecorator(object):
             message = additionals.get('message', '')
             level = additionals.get('level', LOG_LEVELS[1])
 
-            log_func = _get_logging_function(self.logger, level)
+            log_func = utils.get_logging_function(self.logger, level)
             log_func(message, extra=extra)
             return response
 

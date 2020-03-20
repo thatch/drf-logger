@@ -1,4 +1,5 @@
 import logging
+from typing import Callable
 
 from drf_logger.formatters import JSONExtraFormatter, SimpleExtraFormatter
 
@@ -30,3 +31,30 @@ def get_default_logger(name: str, format_: str = 'json') -> logging.Logger:
     ch.setFormatter(formatter)
     logger.addHandler(ch)
     return logger
+
+
+def get_logging_function(logger: logging.Logger, level: str) -> Callable:
+    """ Receive logging.Logger and logging level as args and return logging
+        function which has specified level.
+
+    Args:
+        logger (logging.Logger): A logger instance to output log.
+        level (str): Logging level 'DEBUG', 'INFO', 'WARNING', 'ERROR',
+                     'CRITICAL'.
+
+    Return:
+        Callable: A function to output log.
+    """
+    level = level.upper()
+    if level == 'DEBUG':
+        return logger.debug
+    elif level == 'INFO':
+        return logger.info
+    elif level == 'WARNING':
+        return logger.warning
+    elif level == 'ERROR':
+        return logger.error
+    elif level == 'CRITICAL':
+        return logger.critical
+    else:
+        return logger.info

@@ -1,7 +1,10 @@
 import logging
 import unittest
 
+from django.http import HttpRequest
+from django.core.handlers.wsgi import WSGIRequest
 from drf_logger import utils
+from rest_framework.request import Request
 
 logger = utils.get_default_logger(__name__)
 
@@ -28,3 +31,21 @@ class GetLoggingFunctionTests(unittest.TestCase):
         """ If invalid level passed. """
         ret_func = utils.get_logging_function(logger, 'invalid_level')
         self.assertEqual(ret_func, logger.info)
+
+
+class IsRequestInstanceTests(unittest.TestCase):
+
+    def test_django_http_request(self):
+        """ django.http.HttpRequest """
+        request = HttpRequest()
+        self.assertTrue(utils.is_request_instance(request))
+
+    def test_drf_request(self):
+        """ rest_framework.request.Request """
+        request = Request(HttpRequest())
+        self.assertTrue(utils.is_request_instance(request))
+
+    def test_django_wsgi_request(self):
+        """ rest_framework.request.Request """
+        request = WSGIRequest({'REQUEST_METHOD': 'GET', 'wsgi.input': ''})
+        self.assertTrue(utils.is_request_instance(request))

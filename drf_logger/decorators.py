@@ -1,22 +1,14 @@
 import logging
 import warnings
-from typing import Any, Callable, Tuple
+from typing import Callable
 
-from django.http import HttpRequest
 from django.utils import timezone
-from rest_framework.request import Request
 
 from drf_logger import utils
 
 deco_logger = utils.get_default_logger(__name__)
 
 LOG_LEVELS = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
-
-
-def is_request_instance(request: Any) -> bool:
-    """ Check is django request instance or not """
-    django_request_objects: Tuple[Any, ...] = (HttpRequest, Request)
-    return isinstance(request, django_request_objects)
 
 
 def _get_client_ip(request) -> str:
@@ -54,9 +46,9 @@ class APILoggingDecorator(object):
             # In case decorator used in class based views like
             # rest_framework.viewsets.ModelViewSet, rest_framework.APIView.
             request_obj = request
-            if not is_request_instance(request_obj):
+            if not utils.is_request_instance(request_obj):
                 if len(args) >= 1:
-                    if is_request_instance(args[0]):
+                    if utils.is_request_instance(args[0]):
                         request_obj = args[0]
 
             extra = {}
@@ -66,7 +58,7 @@ class APILoggingDecorator(object):
 
             # request.user is django User model or
             # django.contrib.auth.models.AnonymousUser.
-            if is_request_instance(request_obj):
+            if utils.is_request_instance(request_obj):
                 extra['user_id'] = request_obj.user.id
                 extra['method'] = request_obj.method
 

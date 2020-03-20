@@ -1,15 +1,11 @@
 import os
-<<<<<<< HEAD
-=======
-from typing import Callable, Dict
->>>>>>> 1be0e27f137a8b10a022ec058fbc54255577155a
+from typing import Dict
 import unittest
 
 import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 django.setup()
 
-from django.http import HttpRequest
 from django.core.handlers.wsgi import WSGIRequest
 from rest_framework.test import APIRequestFactory
 from rest_framework.views import APIView
@@ -18,30 +14,12 @@ from rest_framework.response import Response
 
 import drf_logger.utils
 from drf_logger.decorators import (
-    is_request_instance, APILoggingDecorator, _get_client_ip
+    APILoggingDecorator, _get_client_ip
 )
 
 factory = APIRequestFactory()
 
 logger = drf_logger.utils.get_default_logger(__name__)
-
-
-class IsRequestInstanceTests(unittest.TestCase):
-
-    def test_django_http_request(self):
-        """ django.http.HttpRequest """
-        request = HttpRequest()
-        self.assertTrue(is_request_instance(request))
-
-    def test_drf_request(self):
-        """ rest_framework.request.Request """
-        request = Request(HttpRequest())
-        self.assertTrue(is_request_instance(request))
-
-    def test_django_wsgi_request(self):
-        """ rest_framework.request.Request """
-        request = WSGIRequest({'REQUEST_METHOD': 'GET', 'wsgi.input': ''})
-        self.assertTrue(is_request_instance(request))
 
 
 class GetClientIpTests(unittest.TestCase):

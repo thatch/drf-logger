@@ -1,5 +1,8 @@
 import logging
-from typing import Callable
+from typing import Any, Callable, Tuple
+
+from django.http import HttpRequest
+from rest_framework.request import Request
 
 from drf_logger.formatters import JSONExtraFormatter, SimpleExtraFormatter
 
@@ -58,3 +61,9 @@ def get_logging_function(logger: logging.Logger, level: str) -> Callable:
         return logger.critical
     else:
         return logger.info
+
+
+def is_request_instance(request: Any) -> bool:
+    """ Check is django request instance or not """
+    django_request_objects: Tuple[Any, ...] = (HttpRequest, Request)
+    return isinstance(request, django_request_objects)

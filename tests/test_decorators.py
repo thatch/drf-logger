@@ -1,38 +1,21 @@
 import os
-from typing import Dict
 import unittest
 
 import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 django.setup()
 
-from django.core.handlers.wsgi import WSGIRequest
 from rest_framework.test import APIRequestFactory
 from rest_framework.views import APIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 
 import drf_logger.utils
-from drf_logger.decorators import (
-    APILoggingDecorator, _get_client_ip
-)
+from drf_logger.decorators import APILoggingDecorator
 
 factory = APIRequestFactory()
 
 logger = drf_logger.utils.get_default_logger(__name__)
-
-
-class GetClientIpTests(unittest.TestCase):
-
-    def test_simple(self):
-        params: Dict[str, str] = {
-            'REQUEST_METHOD': 'GET',
-            'wsgi.input': '',
-            'REMOTE_ADDR': '127.0.0.0'
-        }
-        request = WSGIRequest(params)
-        ip = _get_client_ip(request)
-        assert ip == params['REMOTE_ADDR']
 
 
 class APILoggingDecoratorTests(unittest.TestCase):

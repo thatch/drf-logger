@@ -11,21 +11,6 @@ deco_logger = utils.get_default_logger(__name__)
 LOG_LEVELS = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
 
 
-def _get_client_ip(request) -> str:
-    """ Get client ip address from request instance. We can fetch ip address
-        from these classes.
-        - django.core.handlers.wsgi.WSGIRequest
-        - rest_framework.request.Request
-    """
-    ip: str
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
-
-
 class APILoggingDecorator(object):
 
     """ APILoggingDecorator is a decorator for APIs of DRF.
@@ -54,7 +39,7 @@ class APILoggingDecorator(object):
             extra = {}
             extra['function'] = func.__module__ + '.' + func.__qualname__
             extra['time'] = str(timezone.now())
-            extra['ip'] = _get_client_ip(request_obj)
+            extra['ip'] = utils.get_client_ip(request_obj)
 
             # request.user is django User model or
             # django.contrib.auth.models.AnonymousUser.

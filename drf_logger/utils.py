@@ -67,3 +67,18 @@ def is_request_instance(request: Any) -> bool:
     """ Check is django request instance or not """
     django_request_objects: Tuple[Any, ...] = (HttpRequest, Request)
     return isinstance(request, django_request_objects)
+
+
+def get_client_ip(request) -> str:
+    """ Get client ip address from request instance. We can fetch ip address
+        from these classes.
+        - django.core.handlers.wsgi.WSGIRequest
+        - rest_framework.request.Request
+    """
+    ip: str
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip

@@ -80,5 +80,4 @@ class DjangoView(View):
 class MixinClassBasedView(APILoggingMixin, View):
 
     def get(self, request, *args, **kwargs):
-        additional = {'message': 'I am MixinView'}
-        return JsonResponse({'message': 'Hello mixin.'}), additional
+        return JsonResponse({'message': 'Hello mixin.'})

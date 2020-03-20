@@ -11,7 +11,11 @@ class APILoggingMixin:
         extra: dict = {}
         extra['time']: str = str(timezone.now())
         extra['ip']: str = _get_client_ip(request)
-        extra['user_id'] = request.user.id
+
+        extra['user_id'] = None
+        if hasattr(request, 'user'):
+            extra['user_id'] = getattr(request.user.id, 'id', None)
+
         extra['method']: str = request.method
 
         response = super().dispatch(request, *args, **kwargs)

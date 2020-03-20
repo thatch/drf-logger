@@ -6,7 +6,6 @@ LOG_LEVELS = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
 
 class APILoggingMixin:
 
-    # logger = getLogger(__name__)
     logger = utils.get_default_logger(__name__)
 
     def dispatch(self, request, *args, **kwargs):

@@ -73,6 +73,17 @@ class PersonViewSet(viewsets.ModelViewSet):
 message from list, function=app.views.PersonViewSet.list, user_id=1, status_code=200
 ```
 
+## What data can drf-logger fetch.
+
+|  data  |  key  |  APILoggingDecorator  |  APILoggingMixin  |
+|---|---|---|---|
+|  name of the api  |  func  |  yes  |  no  |
+|  ip address  |  ip  |  yes  |  yes  |
+|  django user id  |  user_id  |  yes  |  yes  |
+|  http method  |  method  |  yes  |  yes  |
+|  status_code  |  status_code  |  yes  |  yes  |
+
+
 ## Contributing
 - You can see how to contribute to this project in [CONTRIBUTING.md](https://github.com/yutayamazaki/drf-logger/blob/master/CONTRIBUTING.md).
 

@@ -1,6 +1,6 @@
 import logging
 import warnings
-from typing import Callable
+from typing import Any, Callable, Dict, Tuple
 
 from django.utils import timezone
 
@@ -9,7 +9,9 @@ from drf_logger._utils import (
     _get_client_ip, _get_logging_function, _is_request_instance
 )
 
-LOG_LEVELS = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
+LOG_LEVELS: Tuple[str, ...] = (
+    'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'
+)
 
 deco_logger = utils.get_default_logger(__name__)
 
@@ -40,15 +42,15 @@ class APILoggingDecorator(object):
                         request_obj = args[0]
 
             extra = {}
-            extra['function'] = func.__module__ + '.' + func.__qualname__
-            extra['time'] = str(timezone.now())
-            extra['ip'] = _get_client_ip(request_obj)
+            extra['function']: str = func.__module__ + '.' + func.__qualname__
+            extra['time']: str = str(timezone.now())
+            extra['ip']: str = _get_client_ip(request_obj)
 
             # request.user is django User model or
             # django.contrib.auth.models.AnonymousUser.
             if _is_request_instance(request_obj):
                 extra['user_id'] = request_obj.user.id
-                extra['method'] = request_obj.method
+                extra['method']: str = request_obj.method
 
             return_values = func(request, *args, **kwargs)
             # The view returns only response object.
@@ -62,21 +64,21 @@ class APILoggingDecorator(object):
                       ' like {"message": "Hello.", "level": "INFO"}.'
                 warnings.warn(msg)
 
-                extra['status_code'] = response.status_code
+                extra['status_code']: int = response.status_code
                 log_func = _get_logging_function(self.logger, 'INFO')
                 log_func(msg='', extra=extra)
                 return response
 
             response = return_values[0]
-            additionals = return_values[1]
+            ctx: Dict[str, Any] = return_values[1]
 
-            extra['status_code'] = response.status_code
+            extra['status_code']: int = response.status_code
 
-            message = additionals.get('message', '')
-            level = additionals.get('level', LOG_LEVELS[1])
+            msg: str = ctx.get('message', '')
+            level: str = ctx.get('level', LOG_LEVELS[1])
 
             log_func = _get_logging_function(self.logger, level)
-            log_func(message, extra=extra)
+            log_func(msg, extra=extra)
             return response
 
         return wrapper

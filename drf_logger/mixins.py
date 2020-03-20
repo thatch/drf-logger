@@ -17,6 +17,7 @@ class APILoggingMixin:
         response = super().dispatch(request, *args, **kwargs)
 
         extra['status_code']: int = response.status_code
+
         if self.logger is None:
             self.logger = utils.get_default_logger(__name__)
         self.logger.info(msg='', extra=extra)

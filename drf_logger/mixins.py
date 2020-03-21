@@ -14,7 +14,7 @@ class APILoggingMixin:
 
         extra['user_id'] = None
         if hasattr(request, 'user'):
-            extra['user_id'] = getattr(request.user.id, 'id', None)
+            extra['user_id'] = getattr(request.user, 'id', None)
 
         extra['method']: str = request.method
 

@@ -8,7 +8,7 @@
 
 ## Features
 
-- You can fetch information easily like status_code, user_id, the name of function, request time.
+- You can fetch information easily by like status_code, user_id, the name of function, request time, ip address, http method.
 - APILogginDecorator is suitable for function-based views, APILoggingMixin is for class-based views.
 - Readable formatters for logging.Logger like `SimpleExtraFormatter`, `JSONExtraFormatter`.
 

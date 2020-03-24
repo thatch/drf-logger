@@ -26,6 +26,8 @@ pip install drf-logger
 
 ## Example
 
+### How to use APILoggingDecorator
+
 - Write your API with Django Rest Framework and drf-logger.
 
 ```python
@@ -71,6 +73,28 @@ class PersonViewSet(viewsets.ModelViewSet):
 
 ```shell
 message from list, function=app.views.PersonViewSet.list, user_id=1, status_code=200
+```
+
+### How to use APILoggingMixin
+
+- If you use class-based views in django, you can use `APILoggingMixin`.
+
+```python
+from django.views import View
+from drf_logger.mixins import APILoggingMixin
+
+
+class MixinClassBasedView(APILoggingMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({'message': 'Hello mixin.'})
+
+```
+
+- You can get log like this.
+
+```shell
+, time=2020-03-24 16:55:45.794735+00:00, ip=127.0.0.1, user_id=null, method=GET, status_code=200
 ```
 
 ## What data can drf-logger fetch.

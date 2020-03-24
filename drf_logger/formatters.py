@@ -17,11 +17,11 @@ class SimpleExtraFormatter(Formatter):
         Notes:
             ex) A message., function=module.func, user_id=1, status_code=200
         """
-        extra_txt = ''
+        extra_txt: str = ''
         for k, v in record.__dict__.items():
             if k not in KEYS_TO_IGNORE:
                 extra_txt += ', {}={}'.format(k, v)
-        message = super().format(record)
+        message: str = super().format(record)
         return message + extra_txt
 
 
@@ -37,8 +37,8 @@ class JSONExtraFormatter(Formatter):
             ex) {"This is a message": "A message.", "function": "module.func",
                  "user_id": 1, "status_code": 200}
         """
-        dict_to_record = {}
-        message = super().format(record)
+        dict_to_record: dict = {}
+        message: str = super().format(record)
         dict_to_record['message'] = message
 
         for k, v in record.__dict__.items():

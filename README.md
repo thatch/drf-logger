@@ -20,6 +20,17 @@ pip install drf-logger
 ```
 
 
+## What data can you get with drf-logger.
+
+|  data  |  key  |  APILoggingDecorator  |  APILoggingMixin  |
+| :---: | :---: | :---: | :---: |
+|  name of the api  |  func  |  :white_check_mark:  |    |
+|  ip address  |  ip  |  :white_check_mark:  |  :white_check_mark:  |
+|  django user id  |  user_id  |  :white_check_mark:  |  :white_check_mark:  |
+|  http method  |  method  |  :white_check_mark:  |  :white_check_mark:  |
+|  status_code  |  status_code  |  :white_check_mark:  |  :white_check_mark:  |
+
+
 ## Example
 
 - Example django project using drf-logger is available [here](https://github.com/yutayamazaki/drf-logger/tree/docs-mixin/example_project).
@@ -94,16 +105,6 @@ class MixinClassBasedView(APILoggingMixin, View):
 ```shell
 , time=2020-03-24 16:55:45.794735+00:00, ip=127.0.0.1, user_id=null, method=GET, status_code=200
 ```
-
-## What data can drf-logger fetch.
-
-|  data  |  key  |  APILoggingDecorator  |  APILoggingMixin  |
-| :---: | :---: | :---: | :---: |
-|  name of the api  |  func  |  :white_check_mark:  |    |
-|  ip address  |  ip  |  :white_check_mark:  |  :white_check_mark:  |
-|  django user id  |  user_id  |  :white_check_mark:  |  :white_check_mark:  |
-|  http method  |  method  |  :white_check_mark:  |  :white_check_mark:  |
-|  status_code  |  status_code  |  :white_check_mark:  |  :white_check_mark:  |
 
 
 ## Contributing

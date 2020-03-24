@@ -13,11 +13,6 @@
 - Readable formatters for logging.Logger like `SimpleExtraFormatter`, `JSONExtraFormatter`.
 
 
-## Description
-
-- This is a Python package that can easily get information such as status_code, user_id, the name of function etc. just by attaching a decorator.
-
-
 ## Installation
 
 ```shell

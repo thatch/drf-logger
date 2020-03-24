@@ -8,7 +8,8 @@
 
 ## Features
 
-- Logging satus_code, user_id, the name of function, message from view, etc just by attaching a decorator.
+- You can fetch information easily like status_code, user_id, the name of function, request time.
+- APILogginDecorator is suitable for function-based views, APILoggingMixin is for class-based views.
 - Readable formatters for logging.Logger like `SimpleExtraFormatter`, `JSONExtraFormatter`.
 
 
@@ -25,6 +26,8 @@ pip install drf-logger
 
 
 ## Example
+
+- Example django project using drf-logger is available [here](https://github.com/yutayamazaki/drf-logger/tree/docs-mixin/example_project).
 
 ### How to use APILoggingDecorator
 

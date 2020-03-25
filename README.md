@@ -33,7 +33,7 @@ pip install drf-logger
 
 ## Example
 
-- Example django project using drf-logger is available [here](https://github.com/yutayamazaki/drf-logger/tree/docs-mixin/example_project).
+- Example django project using drf-logger is available [here](https://github.com/yutayamazaki/drf-logger/tree/master/example_project).
 
 ### How to use APILoggingDecorator
 

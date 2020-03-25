@@ -1,4 +1,5 @@
 import logging
+import time
 import warnings
 from typing import Any, Callable, Dict, Tuple
 
@@ -52,7 +53,11 @@ class APILoggingDecorator(object):
                 extra['user_id'] = request_obj.user.id
                 extra['method']: str = request_obj.method
 
+            time_start: float = time.time()
             return_values = func(request, *args, **kwargs)
+            processing_time: float = time.time() - time_start
+            extra['processing_time']: str = f'{processing_time:.3e}'
+
             # The view returns only response object.
             if not isinstance(return_values, tuple):
                 response = return_values

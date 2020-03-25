@@ -81,7 +81,8 @@ message from list, function=app.views.PersonViewSet.list, user_id=1, status_code
 |  ip address  |  ip  |  :white_check_mark:  |  :white_check_mark:  |
 |  django user id  |  user_id  |  :white_check_mark:  |  :white_check_mark:  |
 |  http method  |  method  |  :white_check_mark:  |  :white_check_mark:  |
-|  status_code  |  status_code  |  :white_check_mark:  |  :white_check_mark:  |
+|  status code  |  status_code  |  :white_check_mark:  |  :white_check_mark:  |
+|  processing time  |  processing_time  |  :white_check_mark:  |  :white_check_mark:  |
 
 
 ## Contributing

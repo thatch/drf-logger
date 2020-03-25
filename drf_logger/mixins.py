@@ -1,3 +1,4 @@
+import time
 from django.utils import timezone
 from drf_logger import utils
 from drf_logger._utils import _get_client_ip
@@ -18,7 +19,10 @@ class APILoggingMixin:
 
         extra['method']: str = request.method
 
+        time_start: float = time.time()
         response = super().dispatch(request, *args, **kwargs)
+        processing_time: float = time.time() - time_start
+        extra['processing_time']: str = f'{processing_time:.3e}'
 
         extra['status_code']: int = response.status_code
 

@@ -8,13 +8,9 @@
 
 ## Features
 
-- Logging satus_code, user_id, the name of function, message from view, etc just by attaching a decorator.
+- You can fetch information easily by like status_code, user_id, the name of function, request time, ip address, http method.
+- APILogginDecorator is suitable for function-based views, APILoggingMixin is for class-based views.
 - Readable formatters for logging.Logger like `SimpleExtraFormatter`, `JSONExtraFormatter`.
-
-
-## Description
-
-- This is a Python package that can easily get information such as status_code, user_id, the name of function etc. just by attaching a decorator.
 
 
 ## Installation
@@ -24,7 +20,22 @@ pip install drf-logger
 ```
 
 
+## What data can you get with drf-logger.
+
+|  data  |  key  |  APILoggingDecorator  |  APILoggingMixin  |
+| :---: | :---: | :---: | :---: |
+|  name of the api  |  func  |  :white_check_mark:  |    |
+|  ip address  |  ip  |  :white_check_mark:  |  :white_check_mark:  |
+|  django user id  |  user_id  |  :white_check_mark:  |  :white_check_mark:  |
+|  http method  |  method  |  :white_check_mark:  |  :white_check_mark:  |
+|  status_code  |  status_code  |  :white_check_mark:  |  :white_check_mark:  |
+
+
 ## Example
+
+- Example django project using drf-logger is available [here](https://github.com/yutayamazaki/drf-logger/tree/master/example_project).
+
+### How to use APILoggingDecorator
 
 - Write your API with Django Rest Framework and drf-logger.
 
@@ -73,15 +84,27 @@ class PersonViewSet(viewsets.ModelViewSet):
 message from list, function=app.views.PersonViewSet.list, user_id=1, status_code=200
 ```
 
-## What data can drf-logger fetch.
+### How to use APILoggingMixin
 
-|  data  |  key  |  APILoggingDecorator  |  APILoggingMixin  |
-| :---: | :---: | :---: | :---: |
-|  name of the api  |  func  |  :white_check_mark:  |    |
-|  ip address  |  ip  |  :white_check_mark:  |  :white_check_mark:  |
-|  django user id  |  user_id  |  :white_check_mark:  |  :white_check_mark:  |
-|  http method  |  method  |  :white_check_mark:  |  :white_check_mark:  |
-|  status_code  |  status_code  |  :white_check_mark:  |  :white_check_mark:  |
+- If you use class-based views in django, you can use `APILoggingMixin`.
+
+```python
+from django.views import View
+from drf_logger.mixins import APILoggingMixin
+
+
+class MixinClassBasedView(APILoggingMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({'message': 'Hello mixin.'})
+
+```
+
+- You can get log like this.
+
+```shell
+, time=2020-03-24 16:55:45.794735+00:00, ip=127.0.0.1, user_id=null, method=GET, status_code=200
+```
 
 
 ## Contributing

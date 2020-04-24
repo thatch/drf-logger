@@ -1,7 +1,6 @@
 import logging
 import time
-import warnings
-from typing import Any, Callable, Dict, Tuple
+from typing import Callable, Tuple
 
 from django.utils import timezone
 
@@ -30,6 +29,7 @@ class APILoggingDecorator(object):
         if not isinstance(logger, logging.Logger):
             logger = deco_logger
         self.logger = logger
+        self.level = level
 
     def __call__(self, func: Callable) -> Callable:
         def wrapper(request, *args, **kwargs):
@@ -54,36 +54,15 @@ class APILoggingDecorator(object):
                 extra['method']: str = request_obj.method
 
             time_start: float = time.time()
-            return_values = func(request, *args, **kwargs)
+
+            response = func(request, *args, **kwargs)
+
             processing_time: float = time.time() - time_start
             extra['processing_time']: str = f'{processing_time:.3e}'
-
-            # The view returns only response object.
-            if not isinstance(return_values, tuple):
-                response = return_values
-
-                msg = f'API: {extra["function"]} only returns ' \
-                      f'{type(response)}. If you attatch ' \
-                      'drf_logger.decorators.APILoggingDecorator to your ' \
-                      'views, you should return additional logging context' \
-                      ' like {"message": "Hello.", "level": "INFO"}.'
-                warnings.warn(msg)
-
-                extra['status_code']: int = response.status_code
-                log_func = _get_logging_function(self.logger, 'INFO')
-                log_func(msg='', extra=extra)
-                return response
-
-            response = return_values[0]
-            ctx: Dict[str, Any] = return_values[1]
-
             extra['status_code']: int = response.status_code
 
-            msg: str = ctx.get('message', '')
-            level: str = ctx.get('level', LOG_LEVELS[1])
-
-            log_func = _get_logging_function(self.logger, level)
-            log_func(msg, extra=extra)
+            log_func = _get_logging_function(self.logger, self.level)
+            log_func('', extra=extra)
             return response
 
         return wrapper

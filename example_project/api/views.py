@@ -20,9 +20,7 @@ api_logger = APILoggingDecorator(logger=logger, level='INFO')
 @api_view(['GET'])
 @api_logger
 def hello_api(request):
-    message = 'This is a message from hello_api.'
-    additional = {'message': message}
-    return Response({'message': 'hello'}), additional
+    return Response({'message': 'hello'})
 
 
 class PersonViewSet(viewsets.ModelViewSet):
@@ -34,8 +32,7 @@ class PersonViewSet(viewsets.ModelViewSet):
     def list(self, request):
         queryset = Person.objects.all()
         serializer = serializers.PersonSerializer(queryset, many=True)
-        additional = {'message': 'message from list', 'level': 'WARNING'}
-        return Response(serializer.data), additional
+        return Response(serializer.data)
 
 
 class PersonAPIView(APIView):
@@ -45,36 +42,31 @@ class PersonAPIView(APIView):
         serializer = serializers.PersonSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            additional = {'message': 'kw'}
             res = Response(serializer.data, status=status.HTTP_201_CREATED)
-            return res, additional
+            return res
 
-        additional = {'message': 'kw', 'level': 'ERROR'}
         res = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return res, additional
+        return res
 
 
 @api_logger
 def django_json(request):
     data = {'name': 'django_json'}
-    additional = {'message': 'I am from json response.'}
-    return JsonResponse(data), additional
+    return JsonResponse(data)
 
 
 @api_logger
 def http_now(request):
     now = datetime.datetime.now()
     msg = f'datetime: {now}'
-    additional = {'message': 'kw', 'level': 'INFO'}
-    return HttpResponse(msg, content_type='text/plain'), additional
+    return HttpResponse(msg, content_type='text/plain')
 
 
 class DjangoView(View):
 
     @api_logger
     def get(self, request, *args, **kwargs):
-        additional = {'message': 'I am DjangoView'}
-        return JsonResponse({'message': 'I am django boy.'}), additional
+        return JsonResponse({'message': 'I am django boy.'})
 
 
 class MixinClassBasedView(APILoggingMixin, View):
